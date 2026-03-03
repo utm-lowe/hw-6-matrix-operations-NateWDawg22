@@ -70,7 +70,6 @@ int main()
     // Display the transformation matrix
     cout << "Transformation Matrix: " << endl;
     cout << transform << endl;
-    cout << endl;
 
     // transform points
     while(cin) {
@@ -219,6 +218,7 @@ Matrix getPoint()
     // Return your matrix at the end of the function.
     // YOUR CODE HERE
     double x, y;
+    cout << "Enter x and y: ";
     if (!(cin >> x >> y)) {
         return Matrix(3,1);
     }
