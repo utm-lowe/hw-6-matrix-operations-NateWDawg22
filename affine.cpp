@@ -198,7 +198,8 @@ Matrix transformMenu()
             case 'D':
                 break;
             default:
-                // ignore invalid choice silently
+                // ignore invalid choice silently -- you say this but test 2 says I need to print invalid choice
+                cout << "Invalid choice. Please try again." << endl;
                 break;
         }
 
