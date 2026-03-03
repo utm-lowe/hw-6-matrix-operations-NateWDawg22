@@ -1,6 +1,6 @@
 /**
  * @file affine.cpp
- * @author Bob Lowe
+ * @author Nathaniel Burnett
  * @brief Perform affine transformations on 2D points.
  * @version 0.1
  * 
@@ -79,6 +79,7 @@ int main()
         // TODO: Write code to transform the point. This should be a single
         //       line of code!
         // YOUR CODE HERE
+            point = transform * point;
 
         // If we have a new point, display it.
         if(cin) {
@@ -98,6 +99,11 @@ Matrix transIdent()
     //         0 1 0
     //         0 0 1
     // YOUR CODE HERE
+    Matrix id(3,3);
+    id.at(0,0) = 1.0; id.at(0,1) = 0.0; id.at(0,2) = 0.0;
+    id.at(1,0) = 0.0; id.at(1,1) = 1.0; id.at(1,2) = 0.0;
+    id.at(2,0) = 0.0; id.at(2,1) = 0.0; id.at(2,2) = 1.0;
+    return id;
 }
 
 
@@ -110,6 +116,14 @@ Matrix transRotate(double angle)
     //         sin(angle)  cos(angle) 0
     //         0           0          1
     // YOUR CODE HERE
+    double rad = angle * M_PI / 180.0;
+    double c = cos(rad);
+    double s = sin(rad);
+    Matrix r(3,3);
+    r.at(0,0) = c;  r.at(0,1) = -s; r.at(0,2) = 0.0;
+    r.at(1,0) = s;  r.at(1,1) =  c; r.at(1,2) = 0.0;
+    r.at(2,0) = 0.0; r.at(2,1) = 0.0; r.at(2,2) = 1.0;
+    return r;
 }
 
 // build a scaling matrix
@@ -121,6 +135,11 @@ Matrix transScale(double sx, double sy)
     //         0  sy 0
     //         0  0  1
     // YOUR CODE HERE
+    Matrix s(3,3);
+    s.at(0,0) = sx;  s.at(0,1) = 0.0; s.at(0,2) = 0.0;
+    s.at(1,0) = 0.0; s.at(1,1) = sy;  s.at(1,2) = 0.0;
+    s.at(2,0) = 0.0; s.at(2,1) = 0.0; s.at(2,2) = 1.0;
+    return s;
 }
 
 // build a translation matrix
@@ -132,6 +151,11 @@ Matrix translate(double tx, double ty)
     //         0 1 ty
     //         0 0 1
     // YOUR CODE HERE
+    Matrix t(3,3);
+    t.at(0,0) = 1.0; t.at(0,1) = 0.0; t.at(0,2) = tx;
+    t.at(1,0) = 0.0; t.at(1,1) = 1.0; t.at(1,2) = ty;
+    t.at(2,0) = 0.0; t.at(2,1) = 0.0; t.at(2,2) = 1.0;
+    return t;
 }
 
 // do the transformation menu
@@ -155,6 +179,28 @@ Matrix transformMenu()
         // Do a quick google search for "Affine Transformation Matrix" to
         // get more details
         // YOUR CODE HERE
+        switch(choice) {
+            case 'T':
+                cout << "Enter the x and y translation: ";
+                cin >> x >> y;
+                result = translate(x,y) * result;
+                break;
+            case 'R':
+                cout << "Enter the angle of rotation (degrees): ";
+                cin >> angle;
+                result = transRotate(angle) * result;
+                break;
+            case 'S':
+                cout << "Enter the x and y scaling factors: ";
+                cin >> x >> y;
+                result = transScale(x,y) * result;
+                break;
+            case 'D':
+                break;
+            default:
+                cout << "Invalid choice" << endl;
+                break;
+        }
 
     }while(choice != 'D');
 
@@ -172,4 +218,13 @@ Matrix getPoint()
     //          1
     // Return your matrix at the end of the function.
     // YOUR CODE HERE
+    double x, y;
+    if (!(cin >> x >> y)) {
+        return Matrix(3,1);
+    }
+    Matrix p(3,1);
+    p.at(0,0) = x;
+    p.at(1,0) = y;
+    p.at(2,0) = 1.0;
+    return p;
 }

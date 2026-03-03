@@ -89,8 +89,17 @@ int main() {
         //    height to the y coordinate + 1.
         // YOUR CODE HERE
 
-        // We will be talking about the vector object a little later. If you 
-        // want to read ahead though, I encourage that!
+        // Update position: X = X + V*dt
+        position = position + (velocity * deltaTime);
+
+        // Update velocity: V = V + A*dt
+        velocity = velocity + (gravity * deltaTime);
+
+        // Adjust grid height if needed
+        if ((int)position.at(1,0) + 1 > gridHeight) {
+            gridHeight = (int)position.at(1,0) + 1;
+        }
+
         // Store the current position
         trajectory.push_back(position);
     }
