@@ -134,7 +134,9 @@ std::ostream& operator<<(std::ostream& os, const Matrix& m)
         for (int j = 0; j < m.getCols(); ++j) {
             os << std::setw(10) << m.at(i,j) << " ";
         }
-        os << std::endl;
+        // print newline after each row except the last; caller may add one
+        if (i < m.getRows() - 1)
+            os << std::endl;
     }
     return os;
 }

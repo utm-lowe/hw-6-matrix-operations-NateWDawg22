@@ -70,7 +70,6 @@ int main()
     // Display the transformation matrix
     cout << "Transformation Matrix: " << endl;
     cout << transform << endl;
-    cout << endl;
 
     // transform points
     while(cin) {
@@ -198,7 +197,7 @@ Matrix transformMenu()
             case 'D':
                 break;
             default:
-                cout << "Invalid choice" << endl;
+                // ignore invalid choice silently
                 break;
         }
 
